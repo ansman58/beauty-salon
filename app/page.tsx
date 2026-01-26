@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import styles from "./page.module.css";
 import { 
   Scissors, 
@@ -53,6 +54,7 @@ interface Hours {
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -123,12 +125,17 @@ export default function Home() {
           <a href="#" className={styles.logo}>
             Glow<span className={styles.logoAccent}>.</span>
           </a>
-          <ul className={styles.navLinks}>
-            <li><a href="#services" className={styles.navLink}>Services</a></li>
-            <li><a href="#about" className={styles.navLink}>About</a></li>
-            <li><a href="#gallery" className={styles.navLink}>Gallery</a></li>
-            <li><a href="#team" className={styles.navLink}>Team</a></li>
-            <li><a href="#booking" className={styles.navLink}>Book Now</a></li>
+          <ul className={`${styles.navLinks} ${menuOpen ? styles.navActive : ""}`}>
+            <li><a href="#services" className={styles.navLink} onClick={() => setMenuOpen(false)}>Services</a></li>
+            <li><a href="#about" className={styles.navLink} onClick={() => setMenuOpen(false)}>About</a></li>
+            <li><a href="#gallery" className={styles.navLink} onClick={() => setMenuOpen(false)}>Gallery</a></li>
+            <li><a href="#team" className={styles.navLink} onClick={() => setMenuOpen(false)}>Team</a></li>
+            <li><a href="#booking" className={styles.navLink} onClick={() => setMenuOpen(false)}>Book Now</a></li>
+            <li className={styles.mobileOnly}>
+              <a href="#booking" className="btn btn-primary" onClick={() => setMenuOpen(false)}>
+                Book Appointment
+              </a>
+            </li>
           </ul>
           <div className={styles.navCta}>
             <span className={styles.navPhone}>(212) 555-GLOW</span>
@@ -136,7 +143,11 @@ export default function Home() {
               Book Appointment
             </a>
           </div>
-          <button className={styles.mobileMenuBtn} aria-label="Menu">
+          <button 
+            className={`${styles.mobileMenuBtn} ${menuOpen ? styles.mobileMenuOpen : ""}`} 
+            aria-label="Menu"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
             <span></span>
             <span></span>
             <span></span>
@@ -167,10 +178,13 @@ export default function Home() {
               </div>
             </div>
             <div className={styles.heroImage}>
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&h=700&fit=crop"
                 alt="Beauty treatment"
                 className={styles.heroImageMain}
+                width={600}
+                height={700}
+                unoptimized
               />
               <div className={styles.heroImageFloat}>
                 <div className={styles.heroFloatEmoji}><Heart size={24} /></div>
@@ -218,15 +232,21 @@ export default function Home() {
         <div className="container">
           <div className={styles.aboutGrid}>
             <div className={styles.aboutImages}>
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1600948836101-f9ffda59d250?w=400&h=350&fit=crop"
                 alt="Salon interior"
                 className={styles.aboutImage}
+                width={400}
+                height={350}
+                unoptimized
               />
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=400&h=350&fit=crop"
                 alt="Styling session"
                 className={styles.aboutImage}
+                width={400}
+                height={350}
+                unoptimized
               />
             </div>
             <div className={styles.aboutContent}>
@@ -275,7 +295,7 @@ export default function Home() {
           <div className={styles.galleryGrid}>
             {galleryImages.map((image, index) => (
               <div key={index} className={styles.galleryItem}>
-                <img src={image.src} alt={image.caption} className={styles.galleryImage} />
+                <Image src={image.src} alt={image.caption} className={styles.galleryImage} width={600} height={600} unoptimized />
                 <div className={styles.galleryOverlay}>
                   <span className={styles.galleryCaption}>{image.caption}</span>
                 </div>
@@ -300,7 +320,7 @@ export default function Home() {
             {team.map((member, index) => (
               <div key={index} className={styles.teamCard}>
                 <div className={styles.teamImageWrap}>
-                  <img src={member.image} alt={member.name} className={styles.teamImage} />
+                  <Image src={member.image} alt={member.name} className={styles.teamImage} width={400} height={500} unoptimized />
                   <div className={styles.teamSocial}>
                     <a href="#" className={styles.teamSocialLink}><Instagram size={20} /></a>
                     <a href="#" className={styles.teamSocialLink}><Linkedin size={20} /></a>
@@ -337,10 +357,13 @@ export default function Home() {
                 </div>
                 <p className={styles.testimonialText}>{testimonial.text}</p>
                 <div className={styles.testimonialAuthor}>
-                  <img
+                  <Image
                     src={testimonial.avatar}
                     alt={testimonial.author}
                     className={styles.authorAvatar}
+                    width={100}
+                    height={100}
+                    unoptimized
                   />
                   <div className={styles.authorInfo}>
                     <h4>{testimonial.author}</h4>

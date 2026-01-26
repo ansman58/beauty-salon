@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Glow Studio | Luxury Beauty Salon & Spa",
   description: "Discover your inner radiance at Glow Studio. Premium hair styling, skincare treatments, manicures, and spa services in a luxurious, relaxing environment.",
   keywords: "beauty salon, hair salon, spa, skincare, manicure, pedicure, facial, luxury salon",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
